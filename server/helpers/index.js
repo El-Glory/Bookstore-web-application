@@ -2,8 +2,14 @@ import emptyBody from './emptyBody';
 import responseMessage from './responseMessage';
 import validator from './validator';
 
+const { signupMessage } = message;
+
 export default {
 	emptyBody,
 	responseMessage,
-	validator
+	validator,
+	message,
+	createToken,
+	sendMail,
+	findUser
 }

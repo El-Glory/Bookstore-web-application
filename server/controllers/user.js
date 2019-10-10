@@ -12,6 +12,8 @@ class Users {
 				userData 
 			}))
 	}
+
+
 }
 
 export default Users;
