@@ -7,8 +7,7 @@ class Books {
 	static create(req, res) {
 		const {title, author, description, quantity} = req.body
 			const { userId	} = req.params
-			return Book
-			.create({title, author, description, quantity, userId})
+			return Book.create({title, author, description, quantity, userId})
 			.then(book => res.status(201)
 				.send({
 					message: `Your book with the title ${title} has been created successfully`, book
@@ -23,25 +22,25 @@ class Books {
 		.send(books));
 	}
 
-	//Get books by bookId
-	static listId(req, res){
-		return Book
-		findByPk(req.params.bookId)
-		.then(book =>{
-			if (!book) {
-				return res.status(400).send({
-					message: 'Book not found'
-				});
-			}
-			 return book.destroy()
-			.then((book) => res.status(200)
-			.send(book))
-			.catch(error => res.status(400).send(error));
-		})
+	// //Get books by bookId
+	// static listId(req, res){
+	// 	return Book
+	// 	findByPk(req.params.bookId)
+	// 	.then(book =>{
+	// 		if (!book) {
+	// 			return res.status(400).send({
+	// 				message: 'Book not found'
+	// 			});
+	// 		}
+	// 		 return book.destroy()
+	// 		.then((book) => res.status(200)
+	// 		.send(book))
+	// 		.catch(error => res.status(400).send(error));
+	// 	})
 
-		.catch(error => res.status(400).send(error));
+	// 	.catch(error => res.status(400).send(error));
 		
-	}
+	// }
 
  	//modifiy(update) a book
 	static modify(req, res){

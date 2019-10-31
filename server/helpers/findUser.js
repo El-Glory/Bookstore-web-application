@@ -1,4 +1,4 @@
-import models from '../database/models';
+import models from '../models';
 import responseMessage from './responseMessage';
 
 const { User } = models;

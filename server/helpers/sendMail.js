@@ -1,7 +1,7 @@
 import sendgridMail from '@sendgrid/mail';
 
 const sendMail = (senderMail, receiverMail, message) => {
-	sendgridMail.sendApiKey(process.env.SENDGRID_API_KEY);
+	sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 	const msg = {
 		to: receiverMail,
 		from: senderMail,

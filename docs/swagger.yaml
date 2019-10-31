@@ -1,0 +1,299 @@
+openapi: 3.0.0
+info: 
+  title: bookstore
+  description: Bookstore Application
+
+  version: 1.0.0
+
+externalDocs:
+  description: Checkout the Github repo
+  url: https://github.com/El-Glory/Bookstore-web-application
+
+servers:
+- url: /api/v1
+  description: Localhost
+
+tags: 
+- name: user  
+  description: user routes
+- name: book
+  description: book routes
+
+paths: 
+  /books/{userId}/books:
+    post:
+      tag:
+        - book
+      summary: Creating an instance for a book.
+      parameters:
+      - name: userId
+        in: path;
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: fields containing book data
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+          application/x-www-form-urlencoded:
+            schema:
+               $ref: '#/components/schemas/BookInput'
+        required: true
+      responses:
+        201:
+          description: book successfully created
+        401:
+          description: book not created
+        409:
+          description: resource already exists
+        500:
+          description: internal server error
+
+  /books:
+    get:
+      tags:
+        - book
+      summary: fetches all books;
+      
+      responses:
+        200:
+          description: successfully fetched books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: successfully returned book
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: Only you can satisfy my heart
+                        slug:
+                          type: string
+                          example: only-you-can-satisfy-my-heart
+                        author:
+                          type: string
+                          example: John Doe
+                        genre:
+                          type: string
+                          example: action
+                        description:
+                          type: string
+                          example: Our book schemas
+                        body:
+                          type: string
+                          example: We are sons of the father
+                        createdAt:
+                          type: string
+                          example: '2019-08-07T00:53:02.535Z'
+                        updatedAt:
+                          type: string
+                          example: '2019-08-07T00:53:02.535Z'
+        400:
+          description: bad request
+          content: 
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                          example: bookBody
+                        message:
+                          type: string
+                          example: bookBody cannot be empty
+
+  /books/{bookId}: 
+    patch: 
+      tags: 
+        - book
+      summary: book endpoint for updating books using Id
+      description: Updates a single book
+      parameters:
+      - name: bookId
+        in: path
+        description: ID to fetch book
+        required: true
+        schema:
+          type: string
+        requestBody:
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/BookInput'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/BookInput'
+        responses:
+          200:
+            description: successful operation
+            content: 
+              application/json: 
+                schema:
+                  $ref: '#/components/schemas/BookInput'
+              application/x-www-form-urlencoded:
+                schema:
+                  $ref: '#/components/schemas/BookInput'
+          400:
+            description: bad input parameter
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    errors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          fields: 
+                            type: string
+                            example: userId
+                          message:
+                            type: string
+                            example: invalid request
+          403:
+            description: Forbidden. Permission needed
+          404:
+            description: not found
+          500:
+            description: internal server error
+    delete:
+      tags:
+        - book
+      summary: book endpoint for deleting a book
+      description: delete a user
+      parameters:
+      - name: bookId
+        in: path
+        description: Id of user to fetch
+        required: true
+        schema: 
+          type: string
+      responses: 
+         403:
+            description: Forbidden. Permission needed
+          404:
+            description: not found
+          500:
+            description: internal server error
+  /users/signup:
+    post:
+      tags: 
+        - user
+      summary: creating a new user
+      requestBody:
+        description: fields containing user data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/userInput'
+        required: true
+      responses:
+        201:
+          description: user successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userInput'
+        401:
+          description: unauthorized
+        403:
+          description: Forbidden. Permission needed
+        409: 
+          description: resource already exists
+        500:
+          description: internal server error
+  /users/signin:
+    post:
+      tags:
+        - user
+      summary: sign in a user.
+      requestBody:
+        description: fields containing user data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserLoginInput'
+        required: true
+      responses:
+        201:
+          description: user created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginInput'
+        401:
+          description: unauthorized
+        403:
+          description: Forbidden. Permission needed.
+        409:
+          description: resource already exists
+        500:
+          description: internal server error
+components:
+  schemas:
+       BookInput:
+          required:
+            - title
+            - author
+            - description
+            - quantity
+          type: object
+          properties:
+            title:
+              type: string
+              example: robbins
+            author:
+              type: string
+              example: doe
+            description:
+              type: string
+              example: my first book
+            quantity:
+              type: integer
+              example: 10
+       userInput:
+          required: 
+            - name
+            - username
+            - email
+            - password
+          type: object
+          properties: 
+            name: 
+              type: string 
+              example: robbins 
+            username: 
+              type: string
+              example: Doe
+            email: 
+              type: string
+              example: elgloryoriabs@gmail.com
+            password:
+              type: string
+              example: elgloriabs
+        
+

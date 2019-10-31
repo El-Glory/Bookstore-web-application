@@ -7,4 +7,4 @@ export default (request, response, next) => {
 	}else{
 		next();
 	}
-}
+};

@@ -15,7 +15,7 @@ const userValidator = {
 		isValidUsername('username'),
 		isValidPassword(),
 		validateError
-	];
+	],
 
 	signInValidator: [
 		isValidEmail(),
