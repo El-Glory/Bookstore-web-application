@@ -14,6 +14,6 @@ const signupMessage = (name, token) => {
     return message;
 };
 
-export default {
+export {
     signupMessage,
 };

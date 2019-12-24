@@ -26,11 +26,11 @@ app.use(router);
 app.get('*', (req, res) => res.status(200)
 	.send({ message: 'Welcome to the default API route', })); 
 
-const documentation = YAML.load(path.join(__dirname, '../docs/swagger.yaml'));
-documentation.servers[0].url = process.env.SERVER_URL;
+// const documentation = YAML.load(path.join(__dirname, '../docs/swagger.yaml'));
+// documentation.servers[0].url = process.env.SERVER_URL;
 
-// setup swagger documentation
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(documentation));
+// // setup swagger documentation
+// app.use('/docs', swaggerUi.serve, swaggerUi.setup(documentation));
 
 
 server.listen(port, hostname, () => { 

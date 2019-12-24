@@ -6,7 +6,7 @@ const {	validators, emptyBody} = helpers;
 
 const {isValidEmail, isValidName, isValidUsername, isValidPassword} = validators;
 
-const { validateError} = errorHandler;
+const { validatorError} = errorHandler;
 
 const userValidator = {
 	signUpValidator: [
@@ -14,13 +14,13 @@ const userValidator = {
 		isValidName('name'),
 		isValidUsername('username'),
 		isValidPassword(),
-		validateError
+		validatorError
 	],
 
 	signInValidator: [
 		isValidEmail(),
 		isValidPassword(),
-		validateError
+		validatorError
 	]
 }
 
